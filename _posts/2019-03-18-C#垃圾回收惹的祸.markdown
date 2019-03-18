@@ -1,0 +1,13 @@
+﻿---
+layout: post
+title:  "C#垃圾回收常见问题"
+date:   2019-01-01 20:50:19 +0800
+categories: jekyll update
+---
+使用WPF开发的项目上线后，在运行过程中会弹出如下弹窗，而程序日志中并没有记录错误日志。<br>
+在系统日志中，有如下报错：<br>
+应用程序: xxxx.exe Framework 版本: v4.0.30319 说明: 由于 .NET 运行时中出现内部错误，进程终止 位于 IP 62EC4AF0 (62EA0000)，退出代码为 80131506。<br>
+后项目技术大牛指出尝试注释掉项目中有关垃圾回收的代码，项目中有关的GC代码如下：<br>
+<p>GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);</p>
+<p>GC.Collect(1);</p>
+注释后，测试未出现之前的错误。
