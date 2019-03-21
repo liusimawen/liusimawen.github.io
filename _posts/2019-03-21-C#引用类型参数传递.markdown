@@ -1,0 +1,44 @@
+﻿---
+layout: post
+title:  "C#引用类型参数传递"
+date:   2019-03-21 16:33:19 +0800
+categories: jekyll update
+---
+
+之前一直以为引用类型作为实参传递时，在调用方法内部对其的修改，一定会在调用结束后保留，但今天发现其实并非如此。
+
+{% highlight c# %}
+//首先定义TreeNode类
+public class TreeNode
+    {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int x)
+        {
+            val = x;
+        }
+    }
+//声明BuildTree方法
+private static void BuildTree(TreeNode root)
+        {
+            TreeNode tcur = new TreeNode(2);
+            tcur.left = tcur.right = null;
+			root = tcur;//在这对形参赋值
+			}
+//场景方法
+static void Main(string[] args)
+        {
+		    TreeNode root = null;
+		    BuildBSTree(root);
+			Console.Write(root == null);
+		}
+{% endhighlight %}
+现象：在Main方法中，最后的输出为true，root仍然是为null。
+<br>分析：
+<li>传递引用类型时，实际传递的是引用类型的地址，而传递之前的root为null，也就是未分配地址。</li>
+<li>在《深入理解C#》书中，作者说：null引用会采用“值传递”的方式传递。</li>
+<br><strong>最后，如果在传递参数之前，对root进行了初始化，那么调用方法内部的修改就会保留了。</strong>
+{% highlight c# %}
+TreeNode root = new TreeNode(-1);
+{% endhighlight %}
