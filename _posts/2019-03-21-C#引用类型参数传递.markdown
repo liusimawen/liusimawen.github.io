@@ -21,18 +21,18 @@ public class TreeNode
     }
 //声明BuildTree方法
 private static void BuildTree(TreeNode root)
-        {
-            TreeNode tcur = new TreeNode(2);
-            tcur.left = tcur.right = null;
-			root = tcur;//在这对形参赋值
-			}
+    {
+        TreeNode tcur = new TreeNode(2);
+        tcur.left = tcur.right = null;
+		root = tcur;//在这对形参赋值
+	}
 //场景方法
 static void Main(string[] args)
-        {
-		    TreeNode root = null;
-		    BuildBSTree(root);
-			Console.Write(root == null);
-		}
+    {
+		TreeNode root = null;
+		BuildBSTree(root);
+		Console.Write(root == null);
+	}
 {% endhighlight %}
 现象：在Main方法中，最后的输出为true，root仍然是为null。
 <br>分析：
