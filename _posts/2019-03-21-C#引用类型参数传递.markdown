@@ -30,7 +30,7 @@ private static void BuildTree(TreeNode root)
 static void Main(string[] args)
     {
 		TreeNode root = null;
-		BuildBSTree(root);
+		BuildTree(root);
 		Console.Write(root == null);
 	}
 {% endhighlight %}
@@ -42,3 +42,44 @@ static void Main(string[] args)
 {% highlight c# %}
 TreeNode root = new TreeNode(-1);
 {% endhighlight %}
+# 2019-04-22更新
+首先看如下的例子：
+{% highlight c# %}
+static void Main(string[] args)
+        {
+            StringBuilder text = new StringBuilder("123");
+            ChangeSB(text);
+            string str = "123";
+            ChangeString(str);
+        }
+        private static void ChangeSB(StringBuilder sb)
+        {
+            sb.Append("asd");
+            //sb = null;
+        }
+        private static void ChangeString(String sb)
+        {
+            sb = "asd";
+        }
+{% endhighlight %}
+在主方法中，首先初始化text变量，传入ChangeSB方法后，在方法内部对其进行了修改，此时调用结束后，修改保留；
+而当修改ChangeSB方法为
+{% highlight c# %}
+
+        private static void ChangeSB(StringBuilder sb)
+        {
+            //sb.Append("asd");
+            sb = null;
+        }
+{% endhighlight %}
+这时候，方法内部对其传入参数进行了重新赋值，调用结束后，text仍然为123。<br>
+分析：引用类型变量代表的是指向引用类型保存位置的地址，是一个值。因此引用类型传递时，传递的引用对象的地址，
+如果在方法内部对引用类型的变量进行赋值(设为null)，那么只是修改了该变量指向一个内容为null的地址，原来的地址
+中的内容没有发生变化。
+# --------
+引用类型和值类型的区别
+<li>引用类型开头有标识类型的数据块</li>
+<li>引用类型在赋值等操作时，只需复制地址，而不复制所有数据</li>
+<li>引用类型在堆上，值类型存储在它声明的位置。假定有一个类有int类型的实例变量，那么在这个类的任何对象中，
+该变量的值总是和对象中的其他数据在一起，也就是在堆上。只有局部变量（方法内部声明的变量）和方法参数在栈上。</li>
+<li>值类型不可以派生出其他类型，不需要GC(除非装箱)</li>
