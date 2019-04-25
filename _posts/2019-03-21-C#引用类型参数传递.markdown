@@ -50,7 +50,6 @@ static void Main(string[] args)
             StringBuilder text = new StringBuilder("123");
             ChangeSB(text);
             string str = "123";
-            ChangeString(str);
         }
         private static void ChangeSB(StringBuilder sb)
         {

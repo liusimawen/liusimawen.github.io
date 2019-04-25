@@ -29,11 +29,11 @@ int, uint 和 uintptr 在 32 位系统上通常为 32 位宽，在 64 位系统�
 <li>Go语句末尾不强制要求分号，但如for循环内的间隔需要使用分号；</li>
 <li>:=可以代替var，但仅限在函数范围内；</li>
 
-<li>fmt.Printf中的占位符：%T表示取类型；%v表示基础类型取值；%q表示string等类型取值</li>
+<li>fmt.Printf中的占位符：%T表示取类型；%v表示基础类型取值；%q表示string等类型取值；%d占位符</li>
 <li>类型推导：当使用不带类型的:=语法或var = 表达式语法时，变量的类型由右值推导得出；
 不过当右边包含未指明类型的数值常量时，新变量的类型就可能是 int, float64 或 complex128 了，这取决于常量的精度：</li>
 <li>常量使用const声明：const world="世界";常量可以是字符、字符串、布尔值或数值；常量不能用:=语法声明；</li>
-# 流程控制
+## 流程控制
 <li>Go中只有for循环，当for循环只有一个终止条件时，就是while循环</li>
 {% highlight go %}
 package main
@@ -64,6 +64,108 @@ func main() {
 //hello 
 //world
 {% endhighlight %}
+## struct、slice、映射
+### 指针
+<li>指针保存了值的内存地址，类型*T是指向T类型值的指针。其零值为nil；&操作符会生成一个指向其操作数的指针，
+*操作符表示指针指向的底层值。</li>
+{% highlight go %}
+package main
+
+import "fmt"
+
+func main() {
+	i, j := 42, 2701
+
+	p := &i         // 指向 i
+	fmt.Println(*p) // 通过指针读取 i 的值
+	*p = 21         // 通过指针设置 i 的值
+	fmt.Println(i)  // 查看 i 的值
+
+	p = &j         // 指向 j
+	*p = *p / 37   // 通过指针对 j 进行除法运算
+	fmt.Println(j) // 查看 j 的值
+}
+{% endhighlight %}
+### 结构
+<li>一个结构体(struct)就是一组字段(field)</li>
+{% highlight go %}
+type Vertex struct {
+	X int
+	Y int
+}
+{% endhighlight %}
+<li>结构体字段可以通过结构体指针来访问。假如有指向结构体的指针p，则可以(*p).X访问字段X。也允许使用<b>隐式间接引用，直接写p.X</b></li>
+### 数组和切片slice
+<li>类型[n]T表示拥有n个T类型的值的数组。</li>
+<li>切片：类型[]T表示一个元素类型为T的切片。切片通过两个下标来界定，上界和下界，左闭右开。a[low : high]</li>
+{% highlight go %}
+package main
+
+import "fmt"
+
+func main() {
+	primes := [6]int{2, 3, 5, 7, 11, 13}
+
+	var s []int = primes[1:4]
+	fmt.Println(s)
+}
+{% endhighlight %}
+<li>切片就像是数组的引用，并不存储数据，只是描述了底层数组中的一段。更改切片的元素会修改底层数组中对应的元素，
+与它共享底层数组的切片也会观测到这些修改。</li>
+<li>切片文法，类似于构建没有长度的数组文法。
+<li>数组文法：[3]bool{true, true, false}</li>
+<li>切片文法：[]bool{true, true, false}，会创建和上面相同的数组，<b>然后构建一个引用了它的切片</b></li>
+</li>
+<li>切片的长度：它所包含的元素个数；<br>切片的容量：从它的第一个元素开始数，到底层数组末尾的个数。</li>
+<li>切片的零值是nil，长度和容量都为0，且没有底层数组。</li>
+<li>make函数创建切片：make函数会分配一个元素为零值的数组并返回一个引用了它的切片。</li>
+{% highlight go %}
+a := make([]int, 5)  // len(a)=5
+要指定它的容量，需向 make 传入第三个参数：
+
+b := make([]int, 0, 5) // len(b)=0, cap(b)=5
+{% endhighlight %}
+<li>append函数：向切片追加元素</li>
+<li>for 循环的 range 形式可遍历切片或映射。
+当使用 for 循环遍历切片时，每次迭代都会返回两个值。
+第一个值为当前元素的下标，第二个值为该下标所对应元素的一份副本。</li>
+{% highlight go %}
+var array = []int{1, 2, 4, 8, 16, 32, 64, 128}
+
+func main() {
+	for i, v := range array {
+		fmt.Printf("2**%d = %d\n", i, v)
+	}
+}
+{% endhighlight %}
+<li>range续:可以将下标或值赋予 _ 来忽略它。</li>
+### 映射
+<li>映射将键映射到值。零值为nil。nil映射既没有键，也不能添加键。make函数会返回给定类型的映射，并将其初始化备用</li>
+{% highlight go %}
+type Vertex struct {
+	Lat, Long float64
+}
+
+var m map[string]Vertex
+
+func main() {
+	m = make(map[string]Vertex)
+	m["Bell Labs"] = Vertex{
+		40.68433, -74.39967,
+	}
+	fmt.Println(m["Bell Labs"])
+}
+{% endhighlight %}
+### 闭包
+<li>Go 函数可以是一个闭包。闭包是一个函数值，它引用了其函数体之外的变量。
+该函数可以访问并赋予其引用的变量的值，换句话说，该函数被这些变量“绑定”在一起。</li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
 <li></li>
 <li></li>
 <li></li>
