@@ -1,0 +1,31 @@
+﻿---
+layout: post
+title:  ".Net框架各名词解释"
+date:   2019-04-26 12:15:19 +0800
+categories: jekyll update
+---
+.Net程序编译执行的整个过程：
+首先编译器将源码编译为程序集(程序集主要分为.dll和.exe文件，其中主要包括PE/COFF头、CLR头、清单、元数据、CIL和资源文件)，
+然后CLR加载相关的依赖程序集，通过JIT将程序集转换成Native code(机器码)，最终在机器上执行。
+# 名词解释
+## CLR
+公共语言运行时，
+## CIL
+公共中间语言，程序集由CIL所描述，因此CIL也叫做程序集语言。又因为.Net程序集需要由.Net运行时加载才能运行，
+可以视其为由.Net运行时进行管理，所以CIL也叫做托管代码。
+## JIT
+即时编译器，属于CLR的一部分
+## CLI
+公共语言基础
+## CTS
+公共类型系统
+## CLS
+公共语言规范
+## BCL
+基础类库
+## FCL
+框架类库
+{% highlight c# %}
+GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+GC.Collect(1);
+{% endhighlight %}
