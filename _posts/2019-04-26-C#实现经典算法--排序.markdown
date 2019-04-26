@@ -8,7 +8,7 @@ categories: jekyll update
 ## 选择排序
 每次把最小值放到循环的起点。
 {% highlight c# %}
-			n = unOrderHeap;
+n = unOrderHeap;
             for (int i = 0; i < n.Length; i++)
             {
                 int j=i;
@@ -64,7 +64,7 @@ public static void HeapSort(int[] n=null)
 ## 插入排序
 比较相邻元素，将较小的元素交换靠前。
 {% highlight c# %}
-			n = unOrderHeap;
+n = unOrderHeap;
             int l = n.Length;
             for (int i = 1; i < l; i++)
             {
