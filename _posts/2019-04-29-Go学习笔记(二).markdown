@@ -1,0 +1,35 @@
+---
+layout: post
+title:  "Go学习笔记(二)"
+date:   2019-04-29 20:00:00 +0800
+categories: jekyll update
+---
+{% highlight go %}
+{% endhighlight %}
+# 方法
+<li>Go没有类。不过可以为结构体类型定义方法，<b>方法只是一类带特殊的接收者参数的函数</b>。
+方法接收者在它自己的参数列表内，位于func关键字和方法名之间。</li>
+如下：方法Abs的接收者是Vertex结构体
+{% highlight go %}
+type Vertex struct {
+	X, Y float64
+}
+
+func (v Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func main() {
+	v := Vertex{3, 4}
+	fmt.Println(v.Abs())
+}
+{% endhighlight %}
+<li>只能为在同一包内定义的类型的接收者声明方法，而不能为其它包内定义的类型（包括 int 之类的内建类型）的接收者声明方法。</li>
+<li>指针接收者：保存方法对接收者的修改，类似于C#中的ref关键字</li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
