@@ -4,8 +4,6 @@ title:  "Go学习笔记(二)"
 date:   2019-04-29 20:00:00 +0800
 categories: jekyll update
 ---
-{% highlight go %}
-{% endhighlight %}
 # 方法
 <li>Go没有类。不过可以为结构体类型定义方法，<b>方法只是一类带特殊的接收者参数的函数</b>。
 方法接收者在它自己的参数列表内，位于func关键字和方法名之间。</li>
