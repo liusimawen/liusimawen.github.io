@@ -1,0 +1,43 @@
+﻿---
+layout: post
+title:  "反射"
+date:   2019-05-05 17:15:19 +0800
+categories: jekyll update
+---
+# 定义
+在.NET中，查看和操作元数据的动作称为反射或元编程。
+通过反射，可以获取程序集中的托管模块，再获取托管模块中的类型，再根据类型获取类型成员。
+使用反射是，一个重要的类型是System.Type类，其会返回加载堆上的类型对象(包括静态成员和方法表)。
+### 以下方法仅适用于.NET Framework，不适用.NET Core
+<li>获取方法：首先获得类型对象，再使用GetMethods方法获得某个方法，再使用Invoke执行方法。使用GetFields方法获得成员</li>
+{% highlight c# %}
+			Assembly a= Assembly.LoadFile(path);
+			Type t = a.GetType("DllForReflection1.Class1");//命名空间
+			object o = Activator.CreateInstance(t);
+			MethodInfo methodInfo = t.GetMethod("HelloWorld");//获取HelloWorld方法
+			methodInfo.Invoke(o, null);
+{% endhighlight %}
+<li>访问私有成员：GetFields方法获取所有成员，包括私有成员。<b>实例方法和静态方法都通过Invoke方法调用</b></li>
+{% highlight c# %}
+            ReflectionDemoClass r = new ReflectionDemoClass();
+            var t = typeof(ReflectionDemoClass);
+            FieldInfo[] fieldInfos = t.GetFields(BindingFlags.NonPublic | BindingFlags.Public |
+                BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            foreach (FieldInfo info in fieldInfos)
+            {
+                if (info.Name == "APrivateField")
+                {
+                    info.SetValue(r, "12345");
+                }
+                Console.WriteLine("字段名称：{0}, 字段类型:{1}, 值为:{2}",
+                    info.Name, info.FieldType, info.GetValue(r));
+            }
+{% endhighlight %}
+# 反射调用为什么这么慢
+反射将编译时的操作放到运行时
+<li>如，反射首先要操作和查找元数据，而直接调用是在编译时(JIT)查找元数据</li>
+<li>反射调用方法需要在运行时检查输入参数的类型，直接调用在编译时</li>
+<li>反射调用方法，没有经过编译器JIT的优化。</li>
+# 反射优化
+避开反射，使用委托或者表达式树调用
+<li>委托调用是声明一个符合方法的委托，再调用委托，从而避免直接使用反射。</li>
