@@ -82,8 +82,7 @@ func describe(i I) {
 <li>底层值为nil的接口值和为nil的接口值是不一样的。nil接口值既不保存值也不保存具体类型，为nil接口调用方法会产生运行时错误。</li>
 空接口
 <li>空接口可以保存任何类型的值(因为每个类型都至少实现了零个方法)</li>
-{% highlight go %}
-{% endhighlight %}
+
 <li></li>
 <li></li>
 <li></li>
