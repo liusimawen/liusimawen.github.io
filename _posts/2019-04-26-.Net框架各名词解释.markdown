@@ -27,7 +27,3 @@ categories: jekyll update
 基础类库
 ### FCL
 框架类库
-{% highlight c# %}
-GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
-GC.Collect(1);
-{% endhighlight %}

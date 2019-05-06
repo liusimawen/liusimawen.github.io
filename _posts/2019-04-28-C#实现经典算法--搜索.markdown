@@ -14,4 +14,38 @@ categories: jekyll update
 <li></li>
 <li></li>
 {% highlight c# %}
+        private readonly static int[][] grid = new int[][] { new int[]{ 1, 1, 0, 1 },new int[]{ 1, 0, 1, 0 },
+            new int[]{ 1, 1, 1, 1},new int[]{ 1, 0, 1, 1},new int[]{ 1, 0, 1, 1} };
+        public static int GetShortestPath(int tr,int tc)
+        {
+            //交错数组，二维数组是int[,]
+            int[][] direction = new int[][] { new int[]{ -1, 0 }, new int[] { 1, 0 },
+                new int[]{ 0, -1 }, new int[]{ 0, 1 } };
+            int m = grid.Length;int n = grid[0].Length;
+            int pathLength = 0;
+            Queue<KeyValuePair<int, int>> quene = new Queue<KeyValuePair<int, int>>();
+            quene.Enqueue(new KeyValuePair<int, int>(0, 0));
+            while (quene.Count > 0)
+            {
+                int size = quene.Count;
+                pathLength++;
+                while (size-- > 0)
+                {
+                    KeyValuePair<int, int> cur = quene.Dequeue();
+                    int cr = cur.Key;int cc = cur.Value;
+                    foreach (int[] d in direction)
+                    {
+                        int nr = cr + d[0];int nc = cc + d[1];
+						//注意nr>=m，等号不能省略
+                        if (nr < 0 || nr >= m || nc < 0 || nc >= n || grid[nr][nc] == 0)
+                            continue;
+                        if (nr == tr && nc == tc)
+                            return pathLength;
+                        quene.Enqueue(new KeyValuePair<int, int>(nr, nc));
+                    }
+                }
+            }
+            return -1;
+        }
+    }
 {% endhighlight %}
