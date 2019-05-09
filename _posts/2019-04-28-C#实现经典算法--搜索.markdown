@@ -8,11 +8,6 @@ categories: jekyll update
 ## 广度优先搜索
 <li>优先一层一层遍历，每层遍历都以上一层遍历的结果作为起点，遍历一个距离所能访问到的所有节点。遍历过的节点不能再次遍历。</li>
 <li>可以求解无权图的最短路径长度。因为第一次遍历到目的节点，其所经过的路径为最短路径。</li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
 {% highlight c# %}
         private readonly static int[][] grid = new int[][] { new int[]{ 1, 1, 0, 1 },new int[]{ 1, 0, 1, 0 },
             new int[]{ 1, 1, 1, 1},new int[]{ 1, 0, 1, 1},new int[]{ 1, 0, 1, 1} };
@@ -49,3 +44,42 @@ categories: jekyll update
         }
     }
 {% endhighlight %}
+## 深度优先搜索
+常用来求解可达性问题，实现DFS需要考虑：
+<li>栈：用栈来保存当前节点信息，当遍历新节点返回时能够继续遍历当前节点。可以使用递归栈</li>
+<li>标记：对已遍历过的节点进行标记</li>
+求解最大连通域
+{% highlight c# %}
+private int m, n;
+private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+public int maxAreaOfIsland(int[][] grid) {
+    if (grid == null || grid.length == 0) {
+        return 0;
+    }
+    m = grid.length;
+    n = grid[0].length;
+    int maxArea = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            maxArea = Math.max(maxArea, dfs(grid, i, j));
+        }
+    }
+    return maxArea;
+}
+
+private int dfs(int[][] grid, int r, int c) {
+    if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] == 0) {
+        return 0;
+    }
+    grid[r][c] = 0;
+    int area = 1;
+    for (int[] d : direction) {
+        area += dfs(grid, r + d[0], c + d[1]);
+    }
+    return area;
+}
+{% endhighlight %}
+<li></li>
+<li></li>
+<li></li>
