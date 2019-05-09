@@ -51,7 +51,7 @@ categories: jekyll update
 求解最大连通域
 {% highlight c# %}
 private int m, n;
-private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+private int[][] direction = {0, 1}, {0, -1}, {1, 0}, {-1, 0};
 
 public int maxAreaOfIsland(int[][] grid) {
     if (grid == null || grid.length == 0) {
