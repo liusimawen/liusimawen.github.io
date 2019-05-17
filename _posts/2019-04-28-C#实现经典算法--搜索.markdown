@@ -80,6 +80,3 @@ private int dfs(int[][] grid, int r, int c) {
     return area;
 }
 {% endhighlight %}
-<li></li>
-<li></li>
-<li></li>

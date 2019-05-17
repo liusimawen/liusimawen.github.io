@@ -23,43 +23,42 @@ n = unOrderHeap;
 
 {% endhighlight %}
 ## 堆排序
-两步：初始化大根堆和调整大根堆
+两步：1.初始化大根堆，2.交换堆顶元素与最后一个元素
+把最大元素和当前堆中数组的最后一个元素交换位置，并且不删除它，
+那么就可以得到一个从尾到头的递减序列，从正向来看就是一个递增序列，这就是堆排序。
 {% highlight c# %}
-private static void HeapAdjust(int[]n,int s,int heapSize)
-        {
-            int left = (2 * s) + 1;
-            int right = 2 * (s + 1);
-            int large = s;
-            if ( left < heapSize && n[left] > n[large])
-            {
-                large = left;
-            }
-            if ( right < heapSize && n[right] > n[large])
-            {
-                large = right;
-            }
-            if (large != s)
-            {
-                Swap(n, large, s);
-                HeapAdjust(n, large, heapSize);
-            }
-        }
-public static void HeapSort(int[] n=null)
-        {
-            n = unOrderHeap;
-            //初始化大根堆
-            for (int i = (n.Length / 2) - 1; i >= 0; i--)
-            {
-                HeapAdjust(n,i,n.Length);
-            }
+public class HeapSort<T extends Comparable<T>> extends Sort<T> {
+    /**
+     * 数组第 0 个位置不能有元素
+     */
+    @Override
+    public void sort(T[] nums) {
+        int N = nums.length - 1;
+        for (int k = N / 2; k >= 1; k--)
+            sink(nums, k, N);
 
-            for (int i = n.Length - 1; i > 0; i--)
-            {
-                Swap(n, 0, i);
-                HeapAdjust(n, 0, i);
-            }
+        while (N > 1) {
+            swap(nums, 1, N--);
+            sink(nums, 1, N);
         }
+    }
 
+    private void sink(T[] nums, int k, int N) {
+        while (2 * k <= N) {
+            int j = 2 * k;
+            if (j < N && less(nums, j, j + 1))
+                j++;
+            if (!less(nums, k, j))
+                break;
+            swap(nums, k, j);
+            k = j;
+        }
+    }
+
+    private boolean less(T[] nums, int i, int j) {
+        return nums[i].compareTo(nums[j]) < 0;
+    }
+}
 {% endhighlight %}
 ## 插入排序
 比较相邻元素，将较小的元素交换靠前。
@@ -154,6 +153,7 @@ private static void QuickSort(int[] n, int s, int t)
 
 {% endhighlight %}
 ## 归并排序
+<a href="https://github.com/CyC2018/CS-Notes/blob/master/notes/%E7%AE%97%E6%B3%95%20-%20%E6%8E%92%E5%BA%8F.md#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F" target="_blank">详情</a>
 {% highlight c# %}
 private static void Merge(int[] source, int[] dest, int i, int m, int n)
         {
