@@ -1,0 +1,17 @@
+﻿---
+layout: post
+title:  "WPF工作中遇到的问题"
+date:   2019-07-13 
+categories: jekyll update
+---
+# 问题一
+整个项目已经设置了ScrollViewer的样式，但是我想在登录框单独设置滚动条的样式。<br>
+登录框有多个地方使用到了滚动条，既有xaml写的控件，也有直接在.cs中写的控件。为了能只写一份滚动条的样式文件，
+需要在.cs文件中动态引入样式资源。
+关键代码：
+{% highlight c# %}
+//根据键名找到样式资源
+var scrollviewerStyle = Application.Current.FindResource("ScrollViewerForLoginWindow") as Style;
+//设置ScrollViewer的样式，其中第一个参数必须设置为typeof(ScrollViewer)
+this.Resources.Add(typeof(ScrollViewer), scrollviewerStyle);
+{% endhighlight %}
