@@ -1,0 +1,13 @@
+﻿---
+layout: post
+title:  "自动生成的验证码在4k屏的适配"
+date:   2019-07-17
+categories: jekyll update
+---
+# 问题
+利用C#生成验证码，其中使用到了Bitmap，Graphics，和Font类。一开始的时候，固定了图片的尺寸为48px*22px，
+字体大小为12，这样在普通低分辨率的屏幕上没有问题，但是在4k屏幕中就只显示了部分的验证码。
+关键代码：
+{% highlight c# %}
+
+{% endhighlight %}

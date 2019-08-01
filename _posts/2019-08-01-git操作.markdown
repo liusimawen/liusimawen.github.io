@@ -1,0 +1,16 @@
+﻿---
+layout: post
+title:  "git操作"
+date:   2019-07-17
+categories: jekyll update
+---
+# 不同分支合并
+合并之前最好要保持本地副本的干净，也就是修改都已提交，没有未提交的更改。
+全部合并：比如目前在分支1.1，需要把master上的提交合并过来，
+{% highlight c# %}
+git checkout master
+{% endhighlight %}
+部分合并：比如目前在分支1.1，需要把master上的部分文件的提交合并过来，
+{% highlight c# %}
+git checkout master <文件路径>
+{% endhighlight %}
