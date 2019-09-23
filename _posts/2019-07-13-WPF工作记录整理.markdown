@@ -15,3 +15,23 @@ var scrollviewerStyle = Application.Current.FindResource("ScrollViewerForLoginWi
 //设置ScrollViewer的样式，其中第一个参数必须设置为typeof(ScrollViewer)
 this.Resources.Add(typeof(ScrollViewer), scrollviewerStyle);
 {% endhighlight %}
+# SetParent和SetOwner区别
+两者都是提供调用Win32API实现，SetParent实现父子窗口，SetOwner实现拥有者/被拥有者窗口
+## SetParent缺点：
+子窗口不能拖出父窗口显示的范围；
+跨进程设置父子窗口，会导致子进程的ShowDialog失去模态窗的效果；
+## SetOwner缺点：
+焦点问题，当子进程的窗口失去焦点时，父进程的所有者窗口并不会自动获取焦点，导致拥有者窗口会“退到后面”；
+被拥有者窗口不会随着拥有者窗口最小化而最小化
+### 代码示例
+{% highlight c# %}
+// SetOwner
+// childWindow:子窗口，parentPtr：父窗口句柄
+var helper = new WindowInteropHelper(childWindow);
+helper.Owner = parentPtr;
+
+// SetParent
+[DllImport("user32.dll")]
+public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndParent);
+{% endhighlight %}
+
