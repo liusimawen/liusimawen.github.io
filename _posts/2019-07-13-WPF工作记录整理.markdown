@@ -22,7 +22,8 @@ this.Resources.Add(typeof(ScrollViewer), scrollviewerStyle);
 跨进程设置父子窗口，会导致子进程的ShowDialog失去模态窗的效果；
 ## SetOwner缺点：
 焦点问题，当子进程的窗口失去焦点时，父进程的所有者窗口并不会自动获取焦点，导致拥有者窗口会“退到后面”；
-被拥有者窗口不会随着拥有者窗口最小化而最小化
+被拥有者窗口的间接子窗口不会随着拥有者窗口最小化而最小化，比如A是拥有者窗口，B是被拥有者窗口，C是B的子窗口，
+那么C不会随着A窗口最小化而最小化
 ### 代码示例
 {% highlight c# %}
 // SetOwner
