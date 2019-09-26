@@ -25,14 +25,5 @@ this.Resources.Add(typeof(ScrollViewer), scrollviewerStyle);
 被拥有者窗口的间接子窗口不会随着拥有者窗口最小化而最小化，比如A是拥有者窗口，B是被拥有者窗口，C是B的子窗口，
 那么C不会随着A窗口最小化而最小化
 ### 代码示例
-{% highlight c# %}
-// SetOwner
-// childWindow:子窗口，parentPtr：父窗口句柄
-var helper = new WindowInteropHelper(childWindow);
-helper.Owner = parentPtr;
 
-// SetParent
-[DllImport("user32.dll")]
-public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndParent);
-{% endhighlight %}
 
