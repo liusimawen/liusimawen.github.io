@@ -1,6 +1,6 @@
 ﻿---
 layout: post
-title:  "2019-12-17-C#使用DllImport方式调用C++方法"
+title:  "C#使用DllImport方式调用C++方法"
 date:   2019-12-17
 categories: jekyll update
 ---
